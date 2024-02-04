@@ -10,23 +10,10 @@ def pytest_addoption(parser):
 @pytest.fixture(scope="function")
 def browser(request):
     language = request.config.getoption("language")
-    if language == "ru":
-        print("\nstart chrome browser for test..")
-        options = Options()
-        options.add_experimental_option('prefs', {'intl.accept_languages': 'ru'})
-        browser = webdriver.Chrome(options=options)
-    elif language == "en-gb":
-        print("\nstart chrome browser for test..")
-        options = Options()
-        options.add_experimental_option('prefs', {'intl.accept_languages': 'en-gb'})
-        browser = webdriver.Chrome(options=options)
-    elif language == "es":
-        print("\nstart chrome browser for test..")
-        options = Options()
-        options.add_experimental_option('prefs', {'intl.accept_languages': 'es'})
-        browser = webdriver.Chrome(options=options)
-    else:
-        raise pytest.UsageError("--language should be ru or en-gb")
+    print("\nstart chrome browser for test..")
+    options = Options()
+    options.add_experimental_option('prefs', {'intl.accept_languages': language})
+    browser = webdriver.Chrome(options=options)
     yield browser
     print("\nquit browser..")
     browser.quit()
